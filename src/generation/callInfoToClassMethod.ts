@@ -3,7 +3,6 @@ import * as ts from 'typescript';
 
 function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
   const sanitizeResponse = info.responseType.replace(',', '');
-  console.log(sanitizeResponse);
   return ts.createProperty(
     [],
     [],

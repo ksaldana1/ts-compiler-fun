@@ -1,6 +1,6 @@
 import { bff } from './src/proto-namespaces';
 import { Observable } from 'rxjs/Observable';
-export class Client implements bff.Inventory, bff.Users {
+export class Client implements bff.Inventory, bff.Users, bff.Echo {
   constructor(private readonly API: string) {}
   createCount = (
     req: bff.createCountRequest
@@ -73,6 +73,11 @@ export class Client implements bff.Inventory, bff.Users {
   refresh = (req: bff.refreshRequest): Observable<bff.refreshResponse> => {
     return Observable.ajax({ url: `${this.API}/rpc/refresh` }).map(
       r => r.response as bff.refreshResponse
+    );
+  };
+  echo = (req: bff.echoRequest): Observable<bff.echoResponse> => {
+    return Observable.ajax({ url: `${this.API}/rpc/echo` }).map(
+      r => r.response as bff.echoResponse
     );
   };
 }
