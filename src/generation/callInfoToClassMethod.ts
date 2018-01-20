@@ -2,6 +2,7 @@ import { CallInfo } from '../utils/interfaces';
 import * as ts from 'typescript';
 
 function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
+  const sanitizeResponse = info.responseType.replace(',', '');
   return ts.createProperty(
     [],
     [],
@@ -30,8 +31,8 @@ function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
       ts.createTypeReferenceNode('Observable', [
         ts.createTypeReferenceNode(
           ts.createQualifiedName(
-            ts.createIdentifier(`${info.responseType.split('.')[0]}`),
-            ts.createIdentifier(`${info.responseType.split('.')[1]}`)
+            ts.createIdentifier(`${sanitizeResponse.split('.')[0]}`),
+            ts.createIdentifier(`${sanitizeResponse.split('.')[1]}`)
           ),
           []
         ),

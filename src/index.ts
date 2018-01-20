@@ -1,10 +1,12 @@
 import { readFileSync, writeFileSync } from 'fs';
 import getInterfacesFromRoot from './collection/interfaceNames';
-import createHeritageImpls from './generation/classClassWithImplementations';
+import createHeritageImpls from './generation/createHeritageImplsFromInterfaces';
 import ts = require('typescript');
 import interfacesToCallInfo from './collection/interfacesToCallInfo';
 import * as _ from 'lodash';
 import callInfoToClassMethod from './generation/callInfoToClassMethod';
+import { apiProperty } from './generation/createConstructor';
+import createImports from './generation/createImports';
 
 // input
 const outputFile = ts.createSourceFile(
@@ -16,25 +18,37 @@ const outputFile = ts.createSourceFile(
 );
 
 // collection
-
 const interfaces = getInterfacesFromRoot(outputFile);
 const callInfos = interfacesToCallInfo(outputFile, interfaces);
 const methodsMatrix = _.map(callInfos, callInfo => {
   return callInfo.map(callInfoToClassMethod);
 });
 const methods = _.flatten(methodsMatrix);
-// const c = createClassWithImplementations('Client', interfaces);
 
-function create(
+// generate new AST
+function createClassDeclaration(
   name: string,
+  uri: string,
   heritage: ts.HeritageClause,
   methods: ts.PropertyDeclaration[]
 ): ts.ClassDeclaration {
-  return ts.createClassDeclaration([], [], name, [], [heritage], methods);
+  return ts.createClassDeclaration(
+    [],
+    [],
+    name,
+    [],
+    [heritage],
+    [apiProperty(uri), ...methods]
+  );
 }
+const client = createClassDeclaration(
+  'Client',
+  'localhost:5555',
+  createHeritageImpls(interfaces),
+  methods
+);
+const imports = createImports('bff', './proto-namespaces.ts');
 
-const created = create('Client', createHeritageImpls(interfaces), methods);
-// output
 const resultFile = ts.createSourceFile(
   '',
   '',
@@ -42,9 +56,26 @@ const resultFile = ts.createSourceFile(
   /*setParentNodes*/ false,
   ts.ScriptKind.TS
 );
+
 const printer = ts.createPrinter({
   newLine: ts.NewLineKind.LineFeed,
 });
-const result = printer.printNode(ts.EmitHint.Unspecified, created, resultFile);
 
-writeFileSync('./test.ts', result.toString());
+function createImportGeneration(imports: ts.ImportDeclaration[]): string {
+  return imports.reduce((prev, curr, i) => {
+    const printed = printer.printNode(ts.EmitHint.Unspecified, curr, resultFile);
+    let separator = '\n';
+    if (i === 0) {
+      separator = '';
+    }
+    return `${prev}${separator}${printed.toString()}`;
+  }, '');
+}
+// feels hacky
+// how do I add disparate nodes to a root AST?
+const classGeneration = printer.printNode(ts.EmitHint.Unspecified, client, resultFile);
+
+writeFileSync(
+  './test.ts',
+  `${createImportGeneration(imports)}\n${classGeneration.toString()}`
+);

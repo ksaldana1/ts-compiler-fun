@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
-import { bff } from './src/proto-namespaces';
-
+import { bff } from './proto-namespaces.ts';
+import { Observable } from 'rxjs/Observable';
 class Client implements bff.Inventory, bff.Users {
+  constructor(private readonly API: string) {}
   createCount = (req: bff.createCountRequest): Observable<bff.createCountResponse> => {
     return Observable.ajax({ url: `${this.API}/inventory/createCount` });
   };

@@ -1,3 +1,4 @@
 ./src/proto-namespaces.ts
 node_modules
 .vscode
+build
