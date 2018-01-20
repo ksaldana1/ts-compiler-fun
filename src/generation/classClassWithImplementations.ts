@@ -9,12 +9,12 @@ function createClassWithImplementations(
     [],
     className,
     [],
-    [createHeritageFromInterfaces(interfaceImpls)],
+    [createHeritageImplsFromInterfaces(interfaceImpls)],
     []
   );
 }
 
-function createHeritageFromInterfaces(interfaceNames: string[]): ts.HeritageClause {
+function createHeritageImplsFromInterfaces(interfaceNames: string[]): ts.HeritageClause {
   return ts.createHeritageClause(
     ts.SyntaxKind.ImplementsKeyword,
     interfaceNames.map(i => {

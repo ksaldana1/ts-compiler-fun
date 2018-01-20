@@ -2,6 +2,7 @@ import { readFileSync } from 'fs';
 import getInterfacesFromRoot from './collection/interfaceNames';
 import createClassWithImplementations from './generation/classClassWithImplementations';
 import ts = require('typescript');
+import serviceInterfaces, { testCallInfo } from './collection/serviceInterfaces';
 
 // input
 const outputFile = ts.createSourceFile(
@@ -13,7 +14,9 @@ const outputFile = ts.createSourceFile(
 );
 
 // collection
+
 const interfaces = getInterfacesFromRoot(outputFile);
+console.log(testCallInfo(outputFile, interfaces));
 const c = createClassWithImplementations('Client', interfaces);
 
 // output
