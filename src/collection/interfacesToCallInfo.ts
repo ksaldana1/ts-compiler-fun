@@ -37,7 +37,6 @@ function methodSignatureToCallInfo(signature: ts.MethodSignature): CallInfo {
   }
 
   function requestTypeFromSignature(): string {
-    const callType = signature.type as ts.TypeReferenceNode;
     const requestType = signature.parameters[0].type as ts.TypeReferenceNode;
     const requestTypeName = requestType.typeName as ts.QualifiedName;
     const left = requestTypeName.left as ts.Identifier;

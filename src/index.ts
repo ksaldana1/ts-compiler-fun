@@ -34,7 +34,7 @@ function createClassDeclaration(
 ): ts.ClassDeclaration {
   return ts.createClassDeclaration(
     [],
-    [],
+    [ts.createToken(ts.SyntaxKind.ExportKeyword)],
     name,
     [],
     [heritage],
@@ -47,7 +47,7 @@ const client = createClassDeclaration(
   createHeritageImpls(interfaces),
   methods
 );
-const imports = createImports('bff', './proto-namespaces.ts');
+const imports = createImports('bff', './src/proto-namespaces');
 
 const resultFile = ts.createSourceFile(
   '',
@@ -71,10 +71,11 @@ function createImportGeneration(imports: ts.ImportDeclaration[]): string {
     return `${prev}${separator}${printed.toString()}`;
   }, '');
 }
-// feels hacky
-// how do I add disparate nodes to a root AST?
+
 const classGeneration = printer.printNode(ts.EmitHint.Unspecified, client, resultFile);
 
+// feels hacky
+// how do I add disparate nodes to a root AST?
 writeFileSync(
   './test.ts',
   `${createImportGeneration(imports)}\n${classGeneration.toString()}`

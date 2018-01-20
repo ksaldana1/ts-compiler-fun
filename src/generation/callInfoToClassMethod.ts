@@ -3,6 +3,7 @@ import * as ts from 'typescript';
 
 function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
   const sanitizeResponse = info.responseType.replace(',', '');
+  console.log(sanitizeResponse);
   return ts.createProperty(
     [],
     [],
@@ -42,22 +43,60 @@ function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
         ts.createReturn(
           ts.createCall(
             ts.createPropertyAccess(
-              ts.createIdentifier('Observable'),
-              ts.createIdentifier('ajax')
+              ts.createCall(
+                ts.createPropertyAccess(
+                  ts.createIdentifier('Observable'),
+                  ts.createIdentifier('ajax')
+                ),
+                [],
+                [
+                  ts.createObjectLiteral([
+                    ts.createPropertyAssignment(
+                      ts.createIdentifier('url'),
+                      ts.createTemplateExpression(ts.createTemplateHead(''), [
+                        ts.createTemplateSpan(
+                          ts.createPropertyAccess(
+                            ts.createThis(),
+                            ts.createIdentifier('API')
+                          ),
+                          ts.createTemplateTail(`/rpc/${info.requestName}`)
+                        ),
+                      ])
+                    ),
+                  ]),
+                ]
+              ),
+              ts.createIdentifier('map')
             ),
             [],
             [
-              ts.createObjectLiteral([
-                ts.createPropertyAssignment(
-                  ts.createIdentifier('url'),
-                  ts.createTemplateExpression(ts.createTemplateHead(''), [
-                    ts.createTemplateSpan(
-                      ts.createPropertyAccess(ts.createThis(), 'API'),
-                      ts.createTemplateTail(`/inventory/${info.requestName}`)
+              ts.createArrowFunction(
+                [],
+                [],
+                [
+                  ts.createParameter(
+                    [],
+                    [],
+                    undefined,
+                    ts.createIdentifier('r')
+                  ),
+                ],
+                undefined,
+                ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                ts.createAsExpression(
+                  ts.createPropertyAccess(
+                    ts.createIdentifier('r'),
+                    ts.createIdentifier('response')
+                  ),
+                  ts.createTypeReferenceNode(
+                    ts.createQualifiedName(
+                      ts.createIdentifier('bff'),
+                      ts.createIdentifier(`${sanitizeResponse.split('.')[1]}`)
                     ),
-                  ])
-                ),
-              ]),
+                    []
+                  )
+                )
+              ),
             ]
           )
         ),
