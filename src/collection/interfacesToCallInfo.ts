@@ -59,11 +59,9 @@ function methodSignatureToCallInfo(signature: ts.MethodSignature): CallInfo {
   };
 }
 
-export function testCallInfo(root: ts.Node, names: string[]) {
+export function interfacesToCallInfo(root: ts.Node, names: string[]): CallInfo[][] {
   const nodes = getInterfaceNodesFromNames(root, names);
-  nodes.forEach(n => {
-    console.log(interfaceDeclarationTransform(n));
-  });
+  return nodes.map(interfaceDeclarationTransform);
 }
 
-export default getInterfaceNodesFromNames;
+export default interfacesToCallInfo;

@@ -1,8 +1,10 @@
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import getInterfacesFromRoot from './collection/interfaceNames';
-import createClassWithImplementations from './generation/classClassWithImplementations';
+import createHeritageImpls from './generation/classClassWithImplementations';
 import ts = require('typescript');
-import serviceInterfaces, { testCallInfo } from './collection/serviceInterfaces';
+import interfacesToCallInfo from './collection/interfacesToCallInfo';
+import * as _ from 'lodash';
+import callInfoToClassMethod from './generation/callInfoToClassMethod';
 
 // input
 const outputFile = ts.createSourceFile(
@@ -16,9 +18,22 @@ const outputFile = ts.createSourceFile(
 // collection
 
 const interfaces = getInterfacesFromRoot(outputFile);
-console.log(testCallInfo(outputFile, interfaces));
-const c = createClassWithImplementations('Client', interfaces);
+const callInfos = interfacesToCallInfo(outputFile, interfaces);
+const methodsMatrix = _.map(callInfos, callInfo => {
+  return callInfo.map(callInfoToClassMethod);
+});
+const methods = _.flatten(methodsMatrix);
+// const c = createClassWithImplementations('Client', interfaces);
 
+function create(
+  name: string,
+  heritage: ts.HeritageClause,
+  methods: ts.PropertyDeclaration[]
+): ts.ClassDeclaration {
+  return ts.createClassDeclaration([], [], name, [], [heritage], methods);
+}
+
+const created = create('Client', createHeritageImpls(interfaces), methods);
 // output
 const resultFile = ts.createSourceFile(
   '',
@@ -30,6 +45,6 @@ const resultFile = ts.createSourceFile(
 const printer = ts.createPrinter({
   newLine: ts.NewLineKind.LineFeed,
 });
-const result = printer.printNode(ts.EmitHint.Unspecified, c, resultFile);
+const result = printer.printNode(ts.EmitHint.Unspecified, created, resultFile);
 
-console.log(result);
+writeFileSync('./test.ts', result.toString());

@@ -23,4 +23,4 @@ function createHeritageImplsFromInterfaces(interfaceNames: string[]): ts.Heritag
   );
 }
 
-export default createClassWithImplementations;
+export default createHeritageImplsFromInterfaces;
