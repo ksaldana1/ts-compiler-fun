@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 
-function makeClass() {
+export function makeClass() {
   return ts.createClassDeclaration(
     [],
     [],
@@ -63,7 +63,7 @@ function makeClass() {
   );
 }
 
-function makeClient() {
+export function makeClient() {
   return ts.createClassDeclaration(
     [],
     [],

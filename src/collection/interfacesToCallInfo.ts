@@ -1,5 +1,5 @@
-import * as ts from 'typescript';
 import * as _ from 'lodash';
+import * as ts from 'typescript';
 import { CallInfo } from '../utils/interfaces';
 
 export function getNamespaceExports(ss: string[]): string[] {
@@ -26,7 +26,9 @@ function getInterfaceNodesFromNames(
   return result;
 }
 
-export function interfaceDeclarationTransform(node: ts.InterfaceDeclaration): CallInfo[] {
+export function interfaceDeclarationTransform(
+  node: ts.InterfaceDeclaration
+): CallInfo[] {
   return node.members.map(methodSignatureToCallInfo);
 }
 
@@ -58,7 +60,10 @@ function methodSignatureToCallInfo(signature: ts.MethodSignature): CallInfo {
   };
 }
 
-export function interfacesToCallInfo(root: ts.Node, names: string[]): CallInfo[][] {
+export function interfacesToCallInfo(
+  root: ts.Node,
+  names: string[]
+): CallInfo[][] {
   const nodes = getInterfaceNodesFromNames(root, names);
   return nodes.map(interfaceDeclarationTransform);
 }

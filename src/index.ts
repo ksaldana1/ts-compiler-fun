@@ -1,12 +1,13 @@
 import { readFileSync, writeFileSync } from 'fs';
-import getInterfacesFromRoot from './collection/interfaceNames';
-import createHeritage from './generation/createHeritage';
-import * as ts from 'typescript';
-import interfacesToCallInfo from './collection/interfacesToCallInfo';
 import * as _ from 'lodash';
-import createImports from './generation/createImports';
+import * as ts from 'typescript';
+
+import getInterfacesFromRoot from './collection/interfaceNames';
+import interfacesToCallInfo from './collection/interfacesToCallInfo';
 import { createClassDeclaration } from './generation/createClass';
 import callInfoToClassMethod from './generation/createClassMethods';
+import createHeritage from './generation/createHeritage';
+import createImports from './generation/createImports';
 
 // input
 const inputFile = ts.createSourceFile(
@@ -23,8 +24,8 @@ const callInfo = interfacesToCallInfo(inputFile, interfaces);
 
 // ast node generation for output
 const imports = createImports('bff', './src/proto-namespaces');
-const classMethods = _.flatMap(callInfo, callInfo => {
-  return callInfo.map(callInfoToClassMethod);
+const classMethods = _.flatMap(callInfo, ci => {
+  return ci.map(callInfoToClassMethod);
 });
 
 const client = createClassDeclaration(

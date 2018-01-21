@@ -1,5 +1,5 @@
-import * as ts from 'typescript';
 import * as _ from 'lodash';
+import * as ts from 'typescript';
 
 function findClientFactoryMembers(root: ts.Node) {
   let found = false;
@@ -18,11 +18,15 @@ function findClientFactoryMembers(root: ts.Node) {
   return result.members;
 }
 
-function filterToMethod(nodes: ts.NodeArray<ts.TypeElement>): ts.MethodSignature[] {
+function filterToMethod(
+  nodes: ts.NodeArray<ts.TypeElement>
+): ts.MethodSignature[] {
   return nodes.filter(ts.isMethodSignature);
 }
 
-function getTypesFromMethod(methods: ts.MethodSignature[]): ts.TypeReferenceNode[] {
+function getTypesFromMethod(
+  methods: ts.MethodSignature[]
+): ts.TypeReferenceNode[] {
   return methods.map(m => m.type).filter(ts.isTypeReferenceNode);
 }
 

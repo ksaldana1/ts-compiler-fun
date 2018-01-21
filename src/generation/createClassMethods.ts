@@ -1,5 +1,5 @@
-import { CallInfo } from '../utils/interfaces';
 import * as ts from 'typescript';
+import { CallInfo } from '../utils/interfaces';
 
 export function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
   const sanitizeResponse = info.responseType.replace(',', '');
