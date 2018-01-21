@@ -152,7 +152,7 @@ export class Client implements bff.Inventory, bff.Users, bff.Echo {
       },
     }).map(r => r.response as bff.refreshResponse);
   };
-  echo = (req: bff.echoRequest): Observable<bff.echoResponse> => {
+  echo = (req: bff.blah): Observable<bff.dlah> => {
     return Observable.ajax({
       url: `${this.API}/rpc/echo`,
       method: 'POST',
@@ -162,6 +162,6 @@ export class Client implements bff.Inventory, bff.Users, bff.Echo {
         Accept: 'application/json',
         [`Content-Type`]: 'application/json',
       },
-    }).map(r => r.response as bff.echoResponse);
+    }).map(r => r.response as bff.dlah);
   };
 }

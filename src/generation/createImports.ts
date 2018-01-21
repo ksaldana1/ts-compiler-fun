@@ -1,6 +1,9 @@
 import * as ts from 'typescript';
 
-function createImports(exportName: string, path: string): ts.ImportDeclaration[] {
+function createImports(
+  exportName: string,
+  path: string
+): ts.ImportDeclaration[] {
   const protoExport = ts.createImportDeclaration(
     [],
     [],
