@@ -5,57 +5,113 @@ export class Client implements bff.Inventory, bff.Users, bff.Echo {
   createCount = (
     req: bff.createCountRequest
   ): Observable<bff.createCountResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/createCount` }).map(
-      r => r.response as bff.createCountResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/createCount`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.createCountResponse);
   };
   completeCount = (
     req: bff.completeCountRequest
   ): Observable<bff.completeCountResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/completeCount` }).map(
-      r => r.response as bff.completeCountResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/completeCount`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.completeCountResponse);
   };
   getCountDetails = (
     req: bff.getCountDetailsRequest
   ): Observable<bff.getCountDetailsResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/getCountDetails` }).map(
-      r => r.response as bff.getCountDetailsResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/getCountDetails`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.getCountDetailsResponse);
   };
   getKitchenData = (
     req: bff.getKitchenDataRequest
   ): Observable<bff.getKitchenDataResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/getKitchenData` }).map(
-      r => r.response as bff.getKitchenDataResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/getKitchenData`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.getKitchenDataResponse);
   };
   listCounts = (
     req: bff.listCountsRequest
   ): Observable<bff.listCountsResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/listCounts` }).map(
-      r => r.response as bff.listCountsResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/listCounts`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.listCountsResponse);
   };
   updateItemCounts = (
     req: bff.updateItemCountsRequest
   ): Observable<bff.updateItemCountsResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/updateItemCounts` }).map(
-      r => r.response as bff.updateItemCountsResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/updateItemCounts`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.updateItemCountsResponse);
   };
   impersonate = (
     req: bff.impersonateRequest
   ): Observable<bff.impersonateResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/impersonate` }).map(
-      r => r.response as bff.impersonateResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/impersonate`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.impersonateResponse);
   };
   listBusinessForImpersonator = (
     req: bff.listBusinessForImpersonatorRequest
   ): Observable<bff.listBusinessForImpersonatorResponse> => {
     return Observable.ajax({
       url: `${this.API}/rpc/listBusinessForImpersonator`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
     }).map(r => r.response as bff.listBusinessForImpersonatorResponse);
   };
   listUsersForImpersonator = (
@@ -63,21 +119,49 @@ export class Client implements bff.Inventory, bff.Users, bff.Echo {
   ): Observable<bff.listUsersForImpersonatorResponse> => {
     return Observable.ajax({
       url: `${this.API}/rpc/listUsersForImpersonator`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
     }).map(r => r.response as bff.listUsersForImpersonatorResponse);
   };
   login = (req: bff.loginRequest): Observable<bff.loginResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/login` }).map(
-      r => r.response as bff.loginResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/login`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.loginResponse);
   };
   refresh = (req: bff.refreshRequest): Observable<bff.refreshResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/refresh` }).map(
-      r => r.response as bff.refreshResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/refresh`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.refreshResponse);
   };
   echo = (req: bff.echoRequest): Observable<bff.echoResponse> => {
-    return Observable.ajax({ url: `${this.API}/rpc/echo` }).map(
-      r => r.response as bff.echoResponse
-    );
+    return Observable.ajax({
+      url: `${this.API}/rpc/echo`,
+      method: 'POST',
+      timeout: 60 * 1000,
+      body: JSON.stringify(req),
+      headers: {
+        Accept: 'application/json',
+        [`Content-Type`]: 'application/json',
+      },
+    }).map(r => r.response as bff.echoResponse);
   };
 }

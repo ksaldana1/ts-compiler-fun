@@ -62,6 +62,46 @@ function callInfoToClassMethod(info: CallInfo): ts.PropertyDeclaration {
                         ),
                       ])
                     ),
+                    ts.createPropertyAssignment(
+                      ts.createIdentifier('method'),
+                      ts.createLiteral('POST')
+                    ),
+                    ts.createPropertyAssignment(
+                      ts.createIdentifier('timeout'),
+                      ts.createBinary(
+                        ts.createLiteral(60),
+                        ts.SyntaxKind.AsteriskToken,
+                        ts.createLiteral(1000)
+                      )
+                    ),
+                    ts.createPropertyAssignment(
+                      ts.createIdentifier('body'),
+                      ts.createCall(
+                        ts.createPropertyAccess(
+                          ts.createIdentifier('JSON'),
+                          ts.createIdentifier('stringify')
+                        ),
+                        [],
+                        [ts.createIdentifier('req')]
+                      )
+                    ),
+                    ts.createPropertyAssignment(
+                      ts.createIdentifier('headers'),
+                      ts.createObjectLiteral([
+                        ts.createPropertyAssignment(
+                          ts.createIdentifier('Accept'),
+                          ts.createLiteral('application/json')
+                        ),
+                        ts.createPropertyAssignment(
+                          ts.createComputedPropertyName(
+                            ts.createNoSubstitutionTemplateLiteral(
+                              'Content-Type'
+                            )
+                          ),
+                          ts.createLiteral('application/json')
+                        ),
+                      ])
+                    ),
                   ]),
                 ]
               ),
