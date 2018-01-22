@@ -2,12 +2,13 @@ import { readFileSync, writeFileSync } from 'fs';
 import * as _ from 'lodash';
 import * as ts from 'typescript';
 
-import getInterfacesFromRoot from './collection/interfaceNames';
-import interfacesToCallInfo from './collection/interfacesToCallInfo';
-import { createClassDeclaration } from './generation/createClass';
-import callInfoToClassMethod from './generation/createClassMethods';
-import createHeritage from './generation/createHeritage';
-import createImports from './generation/createImports';
+import getInterfacesFromRoot from './http/collection/interfaceNames';
+import interfacesToCallInfo from './http/collection/interfacesToCallInfo';
+import { createClassDeclaration } from './http/generation/createClass';
+import callInfoToClassMethod from './http/generation/createClassMethods';
+import createHeritage from './http/generation/createHeritage';
+import createImports from './http/generation/createImports';
+import { combineNodes } from './utils/ast';
 
 // input
 const inputFile = ts.createSourceFile(
@@ -34,31 +35,5 @@ const client = createClassDeclaration(
   createHeritage(interfaces),
   classMethods
 );
-
-function combineNodes(nodes: ts.Node[]): string {
-  const resultFile = ts.createSourceFile(
-    '',
-    '',
-    ts.ScriptTarget.Latest,
-    false,
-    ts.ScriptKind.TS
-  );
-  const printer = ts.createPrinter({
-    newLine: ts.NewLineKind.LineFeed,
-  });
-
-  return nodes.reduce((prev, curr, i) => {
-    const printed = printer.printNode(
-      ts.EmitHint.Unspecified,
-      curr,
-      resultFile
-    );
-    let separator = '\n';
-    if (i === 0) {
-      separator = '';
-    }
-    return `${prev}${separator}${printed.toString()}`;
-  }, '');
-}
 
 writeFileSync('./output.ts', combineNodes([...imports, client]));

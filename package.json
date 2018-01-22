@@ -13,8 +13,10 @@
     "@types/protobufjs": "^6.0.0",
     "grpc": "^1.8.4",
     "lodash": "^4.17.4",
+    "protobufjs": "^6.8.4",
     "rxjs": "^5.5.6",
     "ts-node": "^4.1.0",
+    "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.2"
   },
   "devDependencies": {

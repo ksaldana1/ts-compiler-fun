@@ -1,0 +1,48 @@
+{
+  "nested": {
+    "inventory": {
+      "nested": {
+        "Kitchen": {
+          "fields": {
+            "id": {
+              "type": "string",
+              "id": 1
+            },
+            "name": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "Item": {
+          "fields": {
+            "id": {
+              "type": "string",
+              "id": 1
+            },
+            "kitchenId": {
+              "type": "int32",
+              "id": 6
+            },
+            "name": {
+              "type": "bool",
+              "id": 7
+            }
+          }
+        },
+        "Next": {
+          "fields": {
+            "what": {
+              "type": "string",
+              "id": 1
+            },
+            "ok": {
+              "type": "int32",
+              "id": 2
+            }
+          }
+        }
+      }
+    }
+  }
+}

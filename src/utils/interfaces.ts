@@ -3,3 +3,7 @@ export interface CallInfo {
   requestType: string;
   responseType: string;
 }
+
+export interface Map<V> {
+  [key: string]: V;
+}

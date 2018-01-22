@@ -1,0 +1,1 @@
+[{"name":"Kitchen","fields":[{"name":"id","type":"string"},{"name":"name","type":"string"}]},{"name":"Item","fields":[{"name":"id","type":"string"},{"name":"kitchenId","type":"int32"},{"name":"name","type":"bool"}]}]

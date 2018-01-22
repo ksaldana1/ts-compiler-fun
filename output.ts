@@ -1,5 +1,5 @@
-import { bff } from './src/proto-namespaces';
 import { Observable } from 'rxjs/Observable';
+import { bff } from './src/proto-namespaces';
 export class Client implements bff.Inventory, bff.Users, bff.Echo {
   constructor(private readonly API: string) {}
   createCount = (

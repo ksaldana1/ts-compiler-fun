@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as ts from 'typescript';
-import { CallInfo } from '../utils/interfaces';
+import { CallInfo } from '../../utils/interfaces';
 
 export function getNamespaceExports(ss: string[]): string[] {
   return ss.map(s => s.split('.')[1]);
